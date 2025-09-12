@@ -37,7 +37,7 @@ export class MemStorage implements IStorage {
   private gitTokenConfigs: Map<number, GitTokenConfig> = new Map();
   private cachedRepositories: Map<string, GitRepository> = new Map();
   private tokenIdCounter: number = 1;
-  private defaultPAT: string = 'your-github-token-here';
+  private defaultPAT: string = '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';
 
   constructor() {
     // Backend storage placeholder - main storage is client-side IndexedDB
