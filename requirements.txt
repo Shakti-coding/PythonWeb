@@ -1,0 +1,8 @@
+tgcrypto
+telethon 
+requests
+yt_dlp
+youtube_dl
+configparser
+python-dotenv
+telethon

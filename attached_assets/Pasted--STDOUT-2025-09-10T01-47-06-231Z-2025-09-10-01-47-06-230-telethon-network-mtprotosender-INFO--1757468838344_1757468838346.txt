@@ -1,0 +1,36 @@
+[STDOUT] 2025-09-10T01:47:06.231Z: 2025-09-10 01:47:06,230 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.176:443/TcpFull...
+
+[STDOUT] 2025-09-10T01:47:06.292Z: 2025-09-10 01:47:06,292 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.176:443/TcpFull complete!
+
+[STDOUT] 2025-09-10T01:47:06.798Z: ✅ Successfully logged in using hardcoded session string!
+🆔 User ID: 6956029558
+👤 Name: Shakti_Kumar''''00012905611''''
+📱 Username: @Ashaktihvc
+📧 Connected to Telegram as: Shakti_Kumar''''00012905611'''' (@Ashaktihvc) - ID: 6956029558
+2025-09-10 01:47:06,798 - root - INFO - Telegram client connected successfully - User ID: 6956029558, Username: @Ashaktihvc
+
+[STDOUT] 2025-09-10T01:47:06.798Z: 2025-09-10 01:47:06,798 - root - INFO - Using hardcoded session string for authentication - no phone/OTP required
+
+[STDOUT] 2025-09-10T01:47:06.799Z: 2025-09-10 01:47:06,799 - root - INFO - Processing forward pair: Test
+
+[STDOUT] 2025-09-10T01:47:06.799Z: 2025-09-10 01:47:06,799 - root - INFO - From: 1927177988, To: 4971189003, Offset: 0
+
+[STDOUT] 2025-09-10T01:47:06.873Z: 2025-09-10 01:47:06,872 - root - ERROR - Error processing forward pair Test: Could not find the input entity for PeerUser(user_id=1927177988) (PeerUser). Please read https://docs.telethon.dev/en/stable/concepts/entities.html to find out more details.
+Traceback (most recent call last):
+  File "/home/runner/workspace/bot_source/python-copier/forwarder.py", line 76, in forward_job
+    async for message in client.iter_messages(intify(from_chat), reverse=True, offset_id=offset):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/telethon/requestiter.py", line 58, in __anext__
+    if await self._init(**self.kwargs):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/telethon/client/messages.py", line 27, in _init
+    self.entity = await self.client.get_input_entity(entity)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/telethon/client/users.py", line 475, in get_input_entity
+    raise ValueError(
+ValueError: Could not find the input entity for PeerUser(user_id=1927177988) (PeerUser). Please read https://docs.telethon.dev/en/stable/concepts/entities.html to find out more details.
+
+[STDOUT] 2025-09-10T01:47:06.957Z: 2025-09-10 01:47:06,957 - root - INFO - Completion notification sent
+
+[STDOUT] 2025-09-10T01:47:06.958Z: 2025-09-10 01:47:06,957 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.176:443/TcpFull...
+
+[STDOUT] 2025-09-10T01:47:06.959Z: 2025-09-10 01:47:06,959 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.176:443/TcpFull complete!

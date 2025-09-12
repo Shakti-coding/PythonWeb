@@ -1,0 +1,435 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(222, 84%, 5%);
+  --foreground: hsl(210, 40%, 98%);
+  --card: hsl(217, 33%, 17%);
+  --card-foreground: hsl(210, 40%, 98%);
+  --popover: hsl(217, 33%, 17%);
+  --popover-foreground: hsl(210, 40%, 98%);
+  --primary: hsl(217, 91%, 60%);
+  --primary-foreground: hsl(222, 84%, 5%);
+  --secondary: hsl(217, 19%, 35%);
+  --secondary-foreground: hsl(210, 40%, 98%);
+  --muted: hsl(217, 33%, 17%);
+  --muted-foreground: hsl(217, 19%, 65%);
+  --accent: hsl(217, 33%, 17%);
+  --accent-foreground: hsl(210, 40%, 98%);
+  --destructive: hsl(0, 63%, 31%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --border: hsl(217, 33%, 17%);
+  --input: hsl(217, 33%, 17%);
+  --ring: hsl(217, 91%, 60%);
+  --chart-1: hsl(217, 91%, 60%);
+  --chart-2: hsl(159.7826, 100%, 36.0784%);
+  --chart-3: hsl(42.0290, 92.8251%, 56.2745%);
+  --chart-4: hsl(147.1429, 78.5047%, 41.9608%);
+  --chart-5: hsl(341.4894, 75.2000%, 50.9804%);
+  --sidebar: hsl(217, 33%, 17%);
+  --sidebar-foreground: hsl(210, 40%, 98%);
+  --sidebar-primary: hsl(217, 91%, 60%);
+  --sidebar-primary-foreground: hsl(222, 84%, 5%);
+  --sidebar-accent: hsl(217, 33%, 17%);
+  --sidebar-accent-foreground: hsl(217, 91%, 60%);
+  --sidebar-border: hsl(217, 33%, 17%);
+  --sidebar-ring: hsl(217, 91%, 60%);
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: Menlo, monospace;
+  --radius: 0.5rem;
+  --shadow-2xs: 0px 2px 0px 0px hsl(217, 91%, 60% / 0.00);
+  --shadow-xs: 0px 2px 0px 0px hsl(217, 91%, 60% / 0.00);
+  --shadow-sm: 0px 2px 0px 0px hsl(217, 91%, 60% / 0.00), 0px 1px 2px -1px hsl(217, 91%, 60% / 0.00);
+  --shadow: 0px 2px 0px 0px hsl(217, 91%, 60% / 0.00), 0px 1px 2px -1px hsl(217, 91%, 60% / 0.00);
+  --shadow-md: 0px 2px 0px 0px hsl(217, 91%, 60% / 0.00), 0px 2px 4px -1px hsl(217, 91%, 60% / 0.00);
+  --shadow-lg: 0px 2px 0px 0px hsl(217, 91%, 60% / 0.00), 0px 4px 6px -1px hsl(217, 91%, 60% / 0.00);
+  --shadow-xl: 0px 2px 0px 0px hsl(217, 91%, 60% / 0.00), 0px 8px 10px -1px hsl(217, 91%, 60% / 0.00);
+  --shadow-2xl: 0px 2px 0px 0px hsl(217, 91%, 60% / 0.00);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+}
+
+.light {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(222, 84%, 5%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(222, 84%, 5%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(222, 84%, 5%);
+  --primary: hsl(217, 91%, 60%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(210, 40%, 96%);
+  --secondary-foreground: hsl(222, 84%, 5%);
+  --muted: hsl(210, 40%, 96%);
+  --muted-foreground: hsl(215, 16%, 47%);
+  --accent: hsl(210, 40%, 96%);
+  --accent-foreground: hsl(222, 84%, 5%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --border: hsl(214, 32%, 91%);
+  --input: hsl(214, 32%, 91%);
+  --ring: hsl(217, 91%, 60%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+}
+
+/* Custom components matching the design */
+.progress-bar {
+  transition: width 0.3s ease-in-out;
+}
+
+.auth-overlay {
+  backdrop-filter: blur(8px);
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.sidebar-item {
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar-item:hover {
+  background-color: hsl(var(--muted));
+  transform: translateX(2px);
+}
+
+.sidebar-item.active {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+.message-card {
+  transition: all 0.2s ease-in-out;
+  border: 1px solid hsl(var(--border));
+}
+
+.message-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.download-progress {
+  background: linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(217, 91%, 70%) 100%);
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.downloading {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+/* UI Layout Styles */
+
+/* Current Design - Default styling (no changes needed) */
+.layout-current {
+  /* Uses default styling */
+}
+
+/* Compact Pro - Dense, professional interface */
+.layout-compact {
+  --radius: 0.25rem;
+}
+
+.layout-compact .card,
+.layout-compact .dialog-content,
+.layout-compact .popover-content {
+  border-radius: 0.25rem;
+  border: 1px solid hsl(var(--border));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.layout-compact .sidebar {
+  width: 200px;
+  border-right: 2px solid hsl(var(--border));
+}
+
+.layout-compact .button {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+}
+
+.layout-compact .chat-message {
+  padding: 0.5rem;
+  margin: 0.125rem 0;
+  border-radius: 0.25rem;
+}
+
+.layout-compact .header {
+  padding: 0.5rem 1rem;
+  border-bottom: 2px solid hsl(var(--border));
+}
+
+/* Modern Glass - Glassmorphism effects */
+.layout-glass {
+  --radius: 1rem;
+  backdrop-filter: blur(20px);
+}
+
+.layout-glass body {
+  background: linear-gradient(135deg, 
+    hsl(var(--background)) 0%, 
+    hsl(var(--muted)) 100%);
+}
+
+.layout-glass .card,
+.layout-glass .dialog-content,
+.layout-glass .popover-content {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.layout-glass .sidebar {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0 1rem 1rem 0;
+}
+
+.layout-glass .button {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.layout-glass .button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.layout-glass .chat-message {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  margin: 0.5rem 0;
+}
+
+/* Classic Box - Traditional card-based design */
+.layout-classic {
+  --radius: 0rem;
+}
+
+.layout-classic .card,
+.layout-classic .dialog-content,
+.layout-classic .popover-content {
+  border: 3px solid hsl(var(--border));
+  border-radius: 0;
+  box-shadow: 4px 4px 0px hsl(var(--muted));
+}
+
+.layout-classic .sidebar {
+  border-right: 3px solid hsl(var(--border));
+  background: hsl(var(--muted)/50);
+}
+
+.layout-classic .button {
+  border: 2px solid hsl(var(--border));
+  border-radius: 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 2px 2px 0px hsl(var(--muted));
+  transition: all 0.1s ease;
+}
+
+.layout-classic .button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px hsl(var(--muted));
+}
+
+.layout-classic .button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px hsl(var(--muted));
+}
+
+.layout-classic .chat-message {
+  border: 2px solid hsl(var(--border));
+  border-radius: 0;
+  box-shadow: 2px 2px 0px hsl(var(--muted));
+  margin: 0.75rem 0;
+}
+
+/* Ultra Minimal - Clean, spacious design */
+.layout-minimal {
+  --radius: 0rem;
+}
+
+.layout-minimal .card,
+.layout-minimal .dialog-content,
+.layout-minimal .popover-content {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.layout-minimal .sidebar {
+  border-right: 1px solid hsl(var(--border)/30);
+  background: transparent;
+}
+
+.layout-minimal .button {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: hsl(var(--foreground));
+  font-weight: 300;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  padding: 1rem 1.5rem;
+}
+
+.layout-minimal .button:hover {
+  background: hsl(var(--muted)/20);
+  color: hsl(var(--primary));
+}
+
+.layout-minimal .chat-message {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  border-left: 2px solid hsl(var(--primary)/30);
+  padding-left: 1rem;
+  margin: 1rem 0;
+}
+
+.layout-minimal .header {
+  border-bottom: 1px solid hsl(var(--border)/30);
+  padding: 1.5rem;
+}
+
+/* Gaming RGB - Neon colors and gaming aesthetics */
+.layout-gaming {
+  --radius: 0.5rem;
+  --primary: 147 51% 51%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 280 100% 50%;
+  --accent: 50 100% 50%;
+}
+
+.layout-gaming body {
+  background: linear-gradient(45deg, #000000, #1a0033, #000000);
+  animation: gamingGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes gamingGlow {
+  0% { background: linear-gradient(45deg, #000000, #1a0033, #000000); }
+  100% { background: linear-gradient(45deg, #001a00, #000000, #1a0033); }
+}
+
+.layout-gaming .card,
+.layout-gaming .dialog-content,
+.layout-gaming .popover-content {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid;
+  border-image: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00) 1;
+  border-radius: 0.5rem;
+  box-shadow: 
+    0 0 20px rgba(255, 0, 255, 0.3),
+    inset 0 0 20px rgba(0, 255, 255, 0.1);
+  animation: gamingPulse 2s ease-in-out infinite;
+}
+
+@keyframes gamingPulse {
+  0%, 100% { 
+    box-shadow: 
+      0 0 20px rgba(255, 0, 255, 0.3),
+      inset 0 0 20px rgba(0, 255, 255, 0.1);
+  }
+  50% { 
+    box-shadow: 
+      0 0 30px rgba(0, 255, 255, 0.5),
+      inset 0 0 30px rgba(255, 0, 255, 0.2);
+  }
+}
+
+.layout-gaming .sidebar {
+  background: rgba(0, 0, 0, 0.9);
+  border-right: 2px solid;
+  border-image: linear-gradient(180deg, #ff00ff, #00ffff) 1;
+}
+
+.layout-gaming .button {
+  background: linear-gradient(45deg, #ff00ff, #00ffff);
+  color: #000000;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+}
+
+.layout-gaming .button:hover {
+  background: linear-gradient(45deg, #00ffff, #ffff00);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
+  transform: scale(1.05);
+}
+
+.layout-gaming .chat-message {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid;
+  border-image: linear-gradient(90deg, #ff00ff, #00ffff, #ffff00) 1;
+  border-radius: 0.5rem;
+  margin: 0.5rem 0;
+  animation: gamingMessageGlow 4s ease-in-out infinite;
+}
+
+@keyframes gamingMessageGlow {
+  0%, 100% { border-image: linear-gradient(90deg, #ff00ff, #00ffff, #ffff00) 1; }
+  33% { border-image: linear-gradient(90deg, #00ffff, #ffff00, #ff00ff) 1; }
+  66% { border-image: linear-gradient(90deg, #ffff00, #ff00ff, #00ffff) 1; }
+}

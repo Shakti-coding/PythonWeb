@@ -1,0 +1,25 @@
+node_modules
+dist
+.DS_Store
+server/public
+vite.config.ts.*
+*.tar.gz
+
+# CRITICAL SECURITY: Telegram session files
+*.session
+*.session-journal
+sessions/
+bottorrent.session*
+test_bot.session*
+
+# Downloads and temporary files
+downloads/
+tmp/
+logs/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

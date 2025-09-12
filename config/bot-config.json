@@ -1,0 +1,48 @@
+{
+  "telegram": {
+    "api_id": "28403662",
+    "api_hash": "079509d4ac7f209a1a58facd00d6ff5a",
+    "bot_token": "8154976061:AAGryZFYIb5fu6OlCVFMAlWgiu6M8J9j_1o",
+    "session": "/app/data/sessions/bottorrent",
+    "authorized_user_ids": ["6956029558"]
+  },
+  "downloads": {
+    "base_path": "/app/data/downloads",
+    "youtube_audio_folder": "/app/data/downloads/youtube/audio",
+    "youtube_video_folder": "/app/data/downloads/youtube/videos",
+    "completed_folder": "/app/data/downloads/completed",
+    "temp_folder": "/app/data/downloads/tmp",
+    "links_folder": "/app/data/downloads/links"
+  },
+  "features": {
+    "enabled_unzip": true,
+    "enabled_unrar": true,
+    "enabled_7z": true,
+    "enabled_youtube": true,
+    "progress_download": true,
+    "max_parallel": 4,
+    "progress_status_show": 10,
+    "dl_timeout": 3600
+  },
+  "youtube": {
+    "links_supported": ["youtube.com", "youtu.be"],
+    "default_download": "VIDEO",
+    "default_extension": "mkv",
+    "format_audio": "bestaudio/best",
+    "format_video": "bestvideo+bestaudio/best",
+    "show_option_timeout": 5,
+    "show_option": true
+  },
+  "system": {
+    "language": "en_EN",
+    "puid": null,
+    "pgid": null,
+    "permissions_folder": "777",
+    "permissions_file": "755"
+  },
+  "paths": {
+    "config": "/app/data/tmp/config/config.ini",
+    "pending_messages": "/app/data/tmp/config/pending_messages.json",
+    "download_files": "/app/data/tmp/config/download_files.json"
+  }
+}

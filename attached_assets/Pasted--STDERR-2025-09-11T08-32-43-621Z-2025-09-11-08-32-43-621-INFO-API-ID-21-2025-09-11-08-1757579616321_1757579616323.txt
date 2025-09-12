@@ -1,0 +1,47 @@
+[STDERR] 2025-09-11T08:32:43.621Z: [2025-09-11 08:32:43,621] INFO    API_ID: 21******
+[2025-09-11 08:32:43,621] INFO    API_HASH: cee3065d60**********************
+
+[STDERR] 2025-09-11T08:32:43.622Z: [2025-09-11 08:32:43,621] INFO    BOT_TOKEN: 8154976061:AAGr*******************************
+[2025-09-11 08:32:43,621] INFO    TG_AUTHORIZED_USER_ID: ['69560*****']
+[2025-09-11 08:32:43,621] INFO    PUID: None
+[2025-09-11 08:32:43,621] INFO    PGID: None
+[2025-09-11 08:32:43,621] INFO    TG_MAX_PARALLEL: 4
+[2025-09-11 08:32:43,621] INFO    TG_DL_TIMEOUT: 3600
+[2025-09-11 08:32:43,622] INFO    TG_PROGRESS_DOWNLOAD: False
+[2025-09-11 08:32:43,622] INFO    PROGRESS_STATUS_SHOW: 10
+
+[STDERR] 2025-09-11T08:32:43.622Z: [2025-09-11 08:32:43,622] INFO    YOUTUBE_FORMAT_AUDIO: bestaudio/best
+[2025-09-11 08:32:43,622] INFO    YOUTUBE_FORMAT_VIDEO: bestvideo+bestaudio/best
+[2025-09-11 08:32:43,622] INFO    YOUTUBE_LINKS_SUPPORTED: ['youtube.com', 'youtu.be']
+
+[STDERR] 2025-09-11T08:32:43.622Z: [2025-09-11 08:32:43,622] INFO    YOUTUBE_DEFAULT_DOWNLOAD: VIDEO
+[2025-09-11 08:32:43,622] INFO    YOUTUBE_DEFAULT_EXTENSION: mkv
+[2025-09-11 08:32:43,622] INFO    YOUTUBE_SHOW_OPTION: True
+
+[STDERR] 2025-09-11T08:32:43.622Z: [2025-09-11 08:32:43,622] INFO    YOUTUBE_SHOW_OPTION_TIMEOUT: 5
+[2025-09-11 08:32:43,622] INFO    ENABLED_UNZIP: False
+
+[STDERR] 2025-09-11T08:32:43.622Z: [2025-09-11 08:32:43,622] INFO    ENABLED_UNRAR: False
+[2025-09-11 08:32:43,622] INFO    ENABLED_7Z: False
+[2025-09-11 08:32:43,622] INFO    LANGUAGE: en_EN
+[2025-09-11 08:32:43,622] INFO    BOT_VERSION: 4.0.9
+[2025-09-11 08:32:43,622] INFO    TELETHON_VERSION: 1.41.2
+[2025-09-11 08:32:43,622] INFO    YTDLP_VERSION: 2025.09.05
+[2025-09-11 08:32:43,622] INFO    create_folders path: /home/runner/workspace/downloads
+
+[STDERR] 2025-09-11T08:32:43.622Z: [2025-09-11 08:32:43,622] INFO    Change permissions of the directory /home/runner/workspace/downloads changed to 777
+
+[STDERR] 2025-09-11T08:32:43.622Z: [2025-09-11 08:32:43,622] INFO    create_folders path: /home/runner/workspace/downloads/tmp
+
+[STDERR] 2025-09-11T08:32:43.622Z: [2025-09-11 08:32:43,622] INFO    Change permissions of the directory /home/runner/workspace/downloads/tmp changed to 777
+[2025-09-11 08:32:43,622] INFO    create_folders path: /home/runner/workspace/downloads/completed
+
+[STDERR] 2025-09-11T08:32:43.623Z: [2025-09-11 08:32:43,622] INFO    Change permissions of the directory /home/runner/workspace/downloads/completed changed to 777
+
+[STDERR] 2025-09-11T08:32:43.623Z: [2025-09-11 08:32:43,623] INFO    create_folders path: /home/runner/workspace/downloads/youtube
+
+[STDERR] 2025-09-11T08:32:43.623Z: [2025-09-11 08:32:43,623] INFO    Change permissions of the directory /home/runner/workspace/downloads/youtube changed to 777
+
+[STDERR] 2025-09-11T08:32:44.259Z: [2025-09-11 08:32:44,259] INFO    ********** START TELETHON DOWNLOADER **********
+
+[STDERR] 2025-09-11T08:32:44.259Z: [2025-09-11 08:32:44,259] INFO     [!!] download_pending_messages grouped_dict: {}

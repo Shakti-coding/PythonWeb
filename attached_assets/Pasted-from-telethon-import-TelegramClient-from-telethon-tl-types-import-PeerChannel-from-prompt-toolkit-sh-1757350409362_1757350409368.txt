@@ -1,0 +1,253 @@
+from telethon import TelegramClient
+from telethon.tl.types import PeerChannel
+from prompt_toolkit.shortcuts import radiolist_dialog
+from prompt_toolkit import prompt
+from difflib import SequenceMatcher
+from datetime import datetime, timezone
+from dateutil import parser
+from tqdm import tqdm
+import nest_asyncio
+import asyncio
+import os
+import re
+
+# 🔐 Credentials
+SESSION_NAME = 'mysession'
+API_ID = 28403662
+API_HASH = '079509d4ac7f209a1a58facd00d6ff5a'
+
+# 📂 Download folder
+DOWNLOAD_DIR = os.path.expanduser("~/storage/shared/PlanB")
+os.makedirs(DOWNLOAD_DIR, exist_ok=True)
+
+client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
+
+# 🧹 Clean text for similarity matching
+def clean(text):
+    if not text:
+        return ""
+    text = text.lower().replace('\xa0', ' ')
+    return re.sub(r'\s+', ' ', text).strip()
+
+# 🔽 Prompt user to select chat
+async def select_chat():
+    dialogs = await client.get_dialogs()
+    chat_options = []
+    id_lookup = {}
+
+    for dialog in dialogs:
+        name = dialog.name or "No Name"
+        chat_options.append((str(dialog.id), f"{name} (ID: {dialog.id})"))
+        id_lookup[str(dialog.id)] = dialog
+
+    selected = radiolist_dialog(
+        title="Select Chat",
+        text="Choose from your channels/groups:",
+        values=chat_options
+    ).run()
+
+    return id_lookup[selected] if selected else None
+
+# 📅 Prompt date input
+async def get_date_input(prompt_text):
+    while True:
+        try:
+            date = parser.parse(prompt(prompt_text).strip())
+            return date.replace(tzinfo=timezone.utc)
+        except Exception:
+            print("❌ Invalid format. Use YYYY-MM-DD or YYYY-MM-DD HH:MM")
+
+# 📊 Count messages between dates
+async def count_by_date_range(entity):
+    start_date = await get_date_input("📅 Enter START date (e.g., 2024-02-01): ")
+    end_date = await get_date_input("📅 Enter END date (e.g., 2025-07-01): ")
+
+    messages = [
+        msg async for msg in client.iter_messages(entity, reverse=True)
+        if msg.date and start_date <= msg.date <= end_date
+    ]
+
+    print(f"\n📊 Date Range Report")
+    print(f"🗓 From: {start_date} to {end_date}")
+    print(f"🔢 Total Messages: {len(messages)}")
+    print(f"🆔 First Message ID: {messages[0].id if messages else 'None'}")
+    print(f"🆔 Last Message ID: {messages[-1].id if messages else 'None'}")
+
+# 📈 Count all messages
+async def count_total_messages(entity):
+    count = 0
+    async for _ in client.iter_messages(entity):
+        count += 1
+    print(f"\n📈 Total Messages in this chat: {count}")
+
+# 🔍 Find similar message and return its ID
+async def find_message_by_text(entity):
+    target = clean(prompt("\n📋 Paste the message to search: "))
+    matches = []
+
+    async for m in client.iter_messages(entity, reverse=True):
+        text_to_compare = m.text or m.message or getattr(m, 'caption', None)
+        if not text_to_compare:
+            continue
+        similarity = SequenceMatcher(None, target, clean(text_to_compare)).ratio()
+        if similarity >= 0.85:
+            matches.append((similarity, m.id, text_to_compare, m.date))
+
+    matches.sort(reverse=True)
+
+    if matches:
+        print("\n📊 Approximate Matches Found:")
+        for i, (score, mid, text, date) in enumerate(matches[:5], start=1):
+            print(f"\n{i}. 📈 Similarity: {round(score * 100)}%")
+            print(f"📝 Message: {text[:300].replace(chr(10), ' ')}")
+        sel = prompt("\n➡️ Enter number (1-5) to select a message (or press Enter to skip): ").strip()
+        if sel.isdigit():
+            sel = int(sel)
+            if 1 <= sel <= len(matches[:5]):
+                _, mid, _, date = matches[sel - 1]
+                print(f"\n✅ Message ID: {mid}")
+                print(f"📅 Date: {date}")
+            else:
+                print("❌ Invalid selection.")
+        else:
+            print("ℹ️ No selection made.")
+    else:
+        print("❌ No similar message found.")
+
+# 🔎 Get message text and date by ID
+async def get_message_by_id(entity):
+    try:
+        mid = int(prompt("\n🔢 Enter the Message ID: "))
+        message = await client.get_messages(entity, ids=mid)
+        if message:
+            content = message.text or getattr(message, 'caption', None)
+            print(f"\n📝 Message: {content}")
+            print(f"📅 Date: {message.date}")
+        else:
+            print("❌ No message found with that ID.")
+    except Exception as e:
+        print(f"⚠️ Error: {e}")
+
+# 📆 Show messages from a specific date
+async def get_messages_on_date(entity):
+    try:
+        date_str = prompt("\n📅 Enter the date (YYYY-MM-DD): ").strip()
+        target_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+        found = False
+        print(f"\n🔍 Searching messages from {target_date}...\n")
+
+        async for m in client.iter_messages(entity, reverse=True):
+            msg_date = m.date.date()
+            if msg_date == target_date:
+                content = m.text or getattr(m, 'caption', None)
+                if not content:
+                    continue
+                found = True
+                print(f"🆔 ID: {m.id}")
+                print(f"📝 Message: {content[:300].replace(chr(10), ' ')}\n")
+
+        if not found:
+            print("❌ No messages found on that date.")
+    except Exception as e:
+        print(f"⚠️ Error: {e}")
+
+# 🎥 Download videos (new option 6)
+async def download_videos(entity):
+    print("\n📌 Fetching last 50 messages for videos...\n")
+    videos = []
+    async for msg in client.iter_messages(entity, limit=50):
+        if msg.video or (msg.document and msg.document.mime_type and msg.document.mime_type.startswith("video/")):
+            caption = msg.text or "No caption"
+            videos.append((msg.id, caption, msg))
+
+    if not videos:
+        print("❌ No videos found.")
+        return
+
+    for v in videos:
+        print(f"ID: {v[0]} | Caption/Filename: {v[1][:50]}")
+
+    user_input = prompt("\n👉 Enter ID or range (e.g. 12345 or 12345-12350): ").strip()
+
+    if "-" in user_input:
+        start, end = map(int, user_input.split("-"))
+        ids = list(range(start, end + 1))
+    else:
+        ids = [int(user_input)]
+
+    for vid_id in ids:
+        selected_msg = None
+        for v in videos:
+            if v[0] == vid_id:
+                selected_msg = v[2]
+                break
+
+        if not selected_msg:
+            print(f"❌ Video with ID {vid_id} not found in last 50 messages.")
+            continue
+
+        if selected_msg.document and selected_msg.document.attributes:
+            fname = next(
+                (attr.file_name for attr in selected_msg.document.attributes if hasattr(attr, "file_name")),
+                None
+            )
+        else:
+            fname = None
+
+        if not fname:
+            fname = f"{vid_id}.mp4"
+
+        safe_name = re.sub(r'[\\/:"*?<>|]+', "_", fname)  # remove illegal chars
+        file_path = os.path.join(DOWNLOAD_DIR, safe_name)
+
+        print(f"\n📥 Downloading {vid_id} → {file_path}")
+        with tqdm(unit="B", unit_scale=True, unit_divisor=1024, miniters=1,
+                  desc=f"ID {vid_id}", total=selected_msg.file.size) as bar:
+            await client.download_media(
+                selected_msg,
+                file=file_path,
+                progress_callback=lambda d, t: bar.update(d - bar.n)
+            )
+        print(f"✅ Saved: {file_path}")
+
+# 🎯 Main menu logic
+async def main():
+    await client.start()
+    chat = await select_chat()
+    if not chat:
+        print("❌ No chat selected.")
+        return
+
+    option = radiolist_dialog(
+        title="Choose Mode",
+        text="What would you like to do?",
+        values=[
+            ("range", "📅 Get message info by date range"),
+            ("total", "📈 Get total number of messages"),
+            ("approx", "🧠 Get message ID from approximate message"),
+            ("id", "🔢 Get message text and date from Message ID"),
+            ("day", "📆 Get ALL messages on a specific date"),
+            ("video", "🎥 Download videos from last 50 messages"),
+        ]
+    ).run()
+
+    if option == "range":
+        await count_by_date_range(chat.entity)
+    elif option == "total":
+        await count_total_messages(chat.entity)
+    elif option == "approx":
+        await find_message_by_text(chat.entity)
+    elif option == "id":
+        await get_message_by_id(chat.entity)
+    elif option == "day":
+        await get_messages_on_date(chat.entity)
+    elif option == "video":
+        await download_videos(chat.entity)
+    else:
+        print("❌ No valid option selected.")
+
+    await client.disconnect()
+
+if __name__ == "__main__":
+    nest_asyncio.apply()
+    asyncio.get_event_loop().run_until_complete(main())
